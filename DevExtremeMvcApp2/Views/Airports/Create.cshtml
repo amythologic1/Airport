@@ -1,0 +1,90 @@
+﻿@using DevExtremeMvcApp2.Models
+@model Airport
+
+<div>
+    <h1>
+        <a>@Html.ActionLink("Airport","Index","Airports")</a>
+    </h1>
+</div>
+
+
+    <div id="form">
+        <div id="lookup"></div>         @(Html.DevExtreme().Form<DevExtremeMvcApp2.Models.Airport>()
+    .Items(items => {
+
+        items.AddSimpleFor(m => m.type);
+
+        items.AddSimpleFor(m => m.name);
+
+        items.AddSimpleFor(m => m.latitude_deg);
+
+        items.AddSimpleFor(m => m.longitude_deg);
+
+        items.AddSimpleFor(m => m.elevation_ft);
+
+        items.AddSimpleFor(m => m.continent);
+
+        items.AddSimpleFor(m => m.iso_country);
+
+        items.AddSimpleFor(m => m.iso_region);
+
+        items.AddSimpleFor(m => m.municipality);
+
+        items.AddSimpleFor(m => m.scheduled_service);
+
+        items.AddSimpleFor(m => m.gps_code);
+
+        items.AddSimpleFor(m => m.home_link);
+
+        items.AddSimpleFor(m => m.wikipedia_link);
+
+        items.AddSimpleFor(m => m.keywords);
+    })
+)
+        @(Html.DevExtreme().Form<Airport>()
+            .ID("form")
+            .Items(items =>
+            {
+                items.AddGroup()
+                    .CssClass("first-group")
+                    .ColCount(4)
+                    .Items(groupItems =>
+                    {
+                        groupItems.AddSimple().Template("<div class='form-avatar'></div>");
+                        groupItems.AddGroup().ColSpan(3).Items(secondGroupItems =>
+                        {
+                            secondGroupItems.AddSimpleFor(m => m.name);
+                            secondGroupItems.AddSimpleFor(m => m.municipality);
+                        });
+                    });
+
+                
+                items.AddGroup()
+                    .CssClass("second-group")
+                    .ColCount(2)
+                    .Items(groupItems =>
+                    {
+                        groupItems.AddGroup().Items(secondGroupItems =>
+                        {
+                            secondGroupItems.AddSimpleFor(m => m.home_link);
+                            secondGroupItems.AddSimpleFor(m => m.wikipedia_link);
+                            secondGroupItems.AddSimpleFor(m => m.scheduled_service);
+                        });
+                        groupItems.AddGroup().Items(secondGroupItems =>
+                        {
+                            secondGroupItems.AddSimpleFor(m => m.gps_code).Label(l => l.Text("Zip Code"));
+                            secondGroupItems.AddSimpleFor(m => m.longitude_deg);
+                            secondGroupItems.AddSimpleFor(m => m.latitude_deg);
+                        });
+
+                        groupItems.AddSimpleFor(m => m.keywords)
+                            .ColSpan(2)
+                            .Editor(e => e
+                                .TextArea()
+                                .Height(140)
+                            );
+                    });
+            })
+            .FormData(Model)
+        )
+    </div>
